@@ -14,6 +14,14 @@ export const handler = middy(
     const userId = getUserId(event)
     const todoId = uuid.v4()
 
+    const name  = createTodoRequest.name
+    if (name.length === 0 ) {
+      return {
+        statusCode: 401,
+        body: null
+      }
+    }
+
     const newTodo = await createTodo(todoId, createTodoRequest, userId)
     return {
       statusCode: 201,
