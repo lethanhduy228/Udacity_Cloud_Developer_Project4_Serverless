@@ -17,6 +17,8 @@ export async function createTodo(
   userId: string
 ): Promise<TodoItem> {
   logger.info('Received a create todo request')
+  // const name = createTodoRequest.name
+  // if (name.length < 1) {return "invalid name"}
   const todo = todosAccess.createTodo({
     todoId: todoId,
     userId: userId,
