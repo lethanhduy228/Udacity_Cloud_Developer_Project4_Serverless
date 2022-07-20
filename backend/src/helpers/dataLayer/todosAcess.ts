@@ -41,7 +41,7 @@ export class TodosAccess {
     return todo
   }
 
-  async getTodosForUser(userId: String): Promise<any> {
+  async getTodosByUser(userId: String): Promise<any> {
     console.log('Getting todo list of userId: ', userId)
 
     const result = await this.docClient

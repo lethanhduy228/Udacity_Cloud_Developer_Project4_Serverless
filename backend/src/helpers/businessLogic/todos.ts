@@ -2,19 +2,21 @@ import { TodosAccess } from '../dataLayer/todosAcess'
 import { TodoItem } from '../../models/TodoItem'
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
-// import { createLogger } from '../../utils/logger'
+import { createLogger } from '../../utils/logger'
 // import * as uuid from 'uuid'
 // import * as createError from 'http-errors'
 import { TodoUpdate } from '../../models/TodoUpdate'
 
 // TODO: Implement businessLogic
 const todosAccess = new TodosAccess()
+const logger = createLogger('TodosAccess')
 
 export async function createTodo(
   todoId: String,
   createTodoRequest: CreateTodoRequest,
   userId: string
 ): Promise<TodoItem> {
+  logger.info('Received a create todo request')
   const todo = todosAccess.createTodo({
     todoId: todoId,
     userId: userId,
@@ -28,8 +30,9 @@ export async function createTodo(
   return todo
 }
 
-export async function getTodosForUser(userId: string): Promise<TodoItem[]> {
-  return todosAccess.getTodosForUser(userId)
+export async function getTodosByUser(userId: string): Promise<TodoItem[]> {
+  logger.info('Received a get all todos request')
+  return todosAccess.getTodosByUser(userId)
 }
 
 export async function updateTodo(
@@ -37,6 +40,7 @@ export async function updateTodo(
   updatedTodo: UpdateTodoRequest,
   userId: String
 ): Promise<TodoUpdate> {
+  logger.info('Received a update todo request')
   const updatedTodoRs = await todosAccess.updateTodo(
     todoId,
     updatedTodo,
@@ -49,6 +53,7 @@ export async function deleteTodo(
   todoId: String,
   userId: String
 ): Promise<void> {
+  logger.info('Received a delete todo request')
   todosAccess.deleteTodo(todoId, userId)
 }
 
@@ -57,5 +62,6 @@ export async function createAttachmentPresignedUrl(
   imageId: String,
   userId: String
 ): Promise<string> {
+  logger.info('Received an create presignedUrl request')
   return todosAccess.createAttachmentPresignedUrl(todoId, imageId, userId)
 }
