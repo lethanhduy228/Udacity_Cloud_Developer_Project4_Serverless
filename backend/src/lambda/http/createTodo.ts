@@ -6,6 +6,7 @@ import { cors } from 'middy/middlewares'
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
 import { getUserId } from '../utils'
 import { createTodo } from '../../helpers/businessLogic/todos'
+import { sendMessageToAllActiveConnections } from '../../utils/websocket'
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -23,6 +24,7 @@ export const handler = middy(
     }
 
     const newTodo = await createTodo(todoId, createTodoRequest, userId)
+    sendMessageToAllActiveConnections(`User with id ${userId} has just created a new todo`)
     return {
       statusCode: 201,
       body: JSON.stringify({
