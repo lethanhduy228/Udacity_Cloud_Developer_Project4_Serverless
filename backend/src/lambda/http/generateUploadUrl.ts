@@ -19,7 +19,7 @@ export const handler = middy(
       imageId,
       userId
     )
-
+    
     return {
       statusCode: 201,
       body: JSON.stringify({ uploadUrl: signedUrl })
